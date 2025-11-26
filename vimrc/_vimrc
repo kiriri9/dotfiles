@@ -1,0 +1,94 @@
+set encoding=utf-8		"ファイルエンコーディングをUTF-8に設定
+set fileencoding=utf-8	"保存時のエンコーディングをUTF-8に設定
+set fileencodings=utf-8,cp932,euc-jp,sjis	"読み込み時のエンコーディング候補
+set ambiwidth=double	"全角文字の幅で記号を正しく表示
+set backspace=indent,eol,start	"バックスペースで字下げ、行末、カーソルの左側を消去可能に設定
+set shell=C:\Program\ Files\Git\bin\bash.exe
+set wildoptions=pum		"コマンド入力保管時の候補を縦に表示
+
+"表示設定
+set number relativenumber "現在行は絶対行数、他は相対行表示
+set smartindent "C言語プログラム風インデント
+set noerrorbells	"ビープ音無し
+set showmatch	"対応する括弧を強調表示
+syntax on		"シンタックスハイライトを有効にする
+set hlsearch	"検索結果をハイライトする
+
+"ESC2回でハイライトオフ
+nnoremap <ESC><ESC> :nohlsearch<CR>
+
+set nowrap		"折り返ししない
+set guifont=Consolas:h9	"フォントを設定
+set guioptions-=r	"右スクロールバーを非表示
+set guioptions-=R	"〃
+set guioptions-=T	"ツールバー非表示
+set guioptions-=m	"メニューバー非表示
+set cursorline		"カーソルのある行を強調表示
+colorscheme koehler	"カラースキーム設定
+highlight lineNr guifg=darkgray
+set lines=35
+set columns=150
+
+"移動
+set whichwrap=b,s,h,l,<,>,[,],~	"行をまたいで移動
+
+"インクリメンタルサーチ
+set incsearch
+
+"*や#で検索した際に自動で次の候補にジャンプしない
+nnoremap * *N
+nnoremap # #N
+
+"検索マッチ数表示
+set shortmess-=S
+
+"タブ・インデント
+set tabstop=4		"タブ幅を4に設定
+set shiftwidth=4	"自動インデントの幅を4に設定
+
+"バックアップファイル作成なし
+set nobackup
+set noswapfile
+
+"クリップボード
+set clipboard=unnamed,autoselect
+
+"タグジャンプ
+set tags=./tags;,tags;
+
+"タグジャンプ時定義元が複数ある場合は一覧表示
+nnoremap <C-]> g<C-]>
+
+"グレップ
+set grepprg=rg\ --vimgrep\ --no-heading\ --encoding=shift_jis
+set grepformat=%f:%l:%c:%m
+
+"開いているときに他から変更されたら自動で読み込み
+set autoread
+
+"次のバッファ
+nnoremap <C-l> :bn<CR>
+"前のバッファ
+nnoremap <C-h> :bp<CR>
+
+"QuickFixウィンドウでctrl+pで前へ、ctrl+nで次へ
+nnoremap <silent> <C-p> :<C-u>cp<CR>
+nnoremap <silent> <C-n> :<C-u>cn<CR>
+
+" Toggle quickfix
+if exists('g:__QUICKFIX_TOGGLE__')
+    finish
+endif
+let g:__QUICKFIX_TOGGLE__ = 1
+
+function! QfToggle()
+  if empty(filter(getwininfo(), 'v:val.quickfix'))
+    copen
+  else
+    cclose
+  endif
+endfunction
+nnoremap <silent> <Space>f :call QfToggle()<CR>
+
+"編集
+nnoremap U <C-r>
